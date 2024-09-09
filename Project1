@@ -10,7 +10,7 @@ class SparseRow {
         int value; //We will assume that all our values will be integers
     public:
         // Default constructor
-        SparseRow() : row(-1), col(-1), value(0) {}
+        SparseRow() : row(0), col(0), value(0.0) {}
         SparseRow(int r, int c, int v) : row(r), col(c), value(v) {}
         void display() const {
             cout << row << ", " << col << ", " << value << endl;
@@ -23,16 +23,20 @@ class SparseRow {
         // Getter for value
         int getValue() const { return value; }
 
-        void print(ostream& s) const {
+        void print(ostream& s, const SparseRow) const {
             s << row << ", " << col << ", " << value;
         }
         void setValue(int v) { value = v; }
+
+        
 };
 
-ostream& operator<<(ostream& s, const SparseRow& sr) {
-    sr.print(s);
-    return s;
-}
+        ostream& operator<<(ostream& s, const SparseRow& sr) {
+            
+            return s;
+        }
+
+
 
 class SparseMatrix {
     protected:
@@ -70,6 +74,15 @@ class SparseMatrix {
         for (int i = 0; i < noNonSparseValues; ++i) {
             myMatrix[i].display();
         }
+    }
+
+    // Conversion function
+    SparseMatrix convertToSparseMatrix() const {
+        SparseMatrix newMatrix(noRows, noCols, commonValue, noNonSparseValues);
+        for (int i = 0; i < noNonSparseValues; ++i) {
+            newMatrix.myMatrix[i] = myMatrix[i];
+        }
+        return newMatrix;
     }
 
     void displayMatrix() const {
@@ -158,6 +171,7 @@ class SparseMatrix {
 
         return nullptr;
     }
+
 };
 
     ostream& operator<<(ostream& s, const SparseMatrix& sm) {
@@ -168,48 +182,50 @@ class SparseMatrix {
     
 
 int main() {
-    int noRows, noCols, commonValue, noNonSparseValues;
-    cin >> noRows >> noCols >> commonValue >> noNonSparseValues;
-
-    SparseMatrix* firstOne = new SparseMatrix(noRows, noCols, commonValue, noNonSparseValues);
+    int n, m, cv, noNSV;
     SparseMatrix* temp;
 
-    firstOne->readMatrix();
-    cout << "First one in sparse matrix format" << endl;
-    cout << *firstOne;
+    cin >> n >> m >> cv >> noNSV; 
+    SparseMatrix* firstOne = new SparseMatrix(n, m, cv, noNSV);
 
-    cout << "After transpose" << endl;
-    temp = firstOne->Transpose();
-    cout << *temp;
-    delete temp;
+    //Write the Statements to read in the first matrix
+
+    cin >> n >> m >> cv >> noNSV;
+    SparseMatrix* secondOne = new SparseMatrix(n, m, cv, noNSV);
+
+    //Write the Statements to read in the second matrix
 
     cout << "First one in matrix format" << endl;
-    firstOne->displayMatrix();
+    (*firstOne).displayMatrix();
 
-    cin >> noRows >> noCols >> commonValue >> noNonSparseValues;
-    SparseMatrix* secondOne = new SparseMatrix(noRows, noCols, commonValue, noNonSparseValues);
-
-    secondOne->readMatrix();
-
-    cout << "Second one in sparse matrix format" << endl;
-    cout << *secondOne;
-
-    cout << "After transpose" << endl;
-    temp = secondOne->Transpose();
-    cout << *temp;
-    delete temp;
+    cout << "First one in sparse matrix format" << endl;
+    cout << (*firstOne);
 
     cout << "Second one in matrix format" << endl;
-    secondOne->displayMatrix();
+    (*secondOne).displayMatrix();
 
-    cout << "Matrix addition Result" << endl;
-    SparseMatrix* additionResult = firstOne->Addition(secondOne);
+    cout << "Second one in sparse matrix format" << endl;
+    cout << (*secondOne);
 
+    cout << "Transpose of the first one in matrix" << endl;
+    cout << (*(*firstOne).Transpose());
+
+    cout << "Matrix Addition Result" << endl;
+    temp = (*(*firstOne).Addition(secondOne));
+
+    cout << temp;
+    (*temp).displayMatrix();
+    
     cout << "Matrix Multiplication Result" << endl;
-    SparseMatrix* multiplicationResult = firstOne->Multiply(secondOne);
+
+    temp = (*(*firstOne).Multiply(secondOne));
+    cout << temp;
+    (*temp).displayMatrix();
+
 
     delete firstOne;
     delete secondOne;
+    delete temp;
     
     return 0;
 }
