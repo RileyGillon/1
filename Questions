@@ -1,0 +1,12 @@
+create getters and setters for the SparseRow class - I chose this promotion to show me how to create getters and setters so that I could implement those variables at a later time in the code
+
+how to initialize an array in C++ - This helped me get the bases for using the arrays
+
+create a proper method for display(); for the SparseRow class - I chose this prompt to show me how I would be able to display what I wanted 
+
+create getters and setters for the SparseMatrix class - I chose this promotion to show me how to create getters and setters so that I could implement those variables at a later time in the code
+
+create a proper method for displayMatrix(); for the SparseMatrix class - This gave me a bare-bone display which allowed me to put in multiple for-loops
+
+How does ostream& operator<< (ostream& s, const SparseMatrix& sm); work - This allowed me to better understand what this code meant and how to properly implement it
+
