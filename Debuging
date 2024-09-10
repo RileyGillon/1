@@ -1,0 +1,7 @@
+The errors that occurred were:
+
+member "SparseMatrix::noNonSparseValues" (declared at line 46) is inaccessible 
+member "SparseMatrix::myMatrix" (declared at line 47) is inaccessible 
+
+
+I was able to correct these two errors by adding “friend std::ostream& operator<<(std::ostream& s, const SparseMatrix& sm);” in the SparseMatrix class
